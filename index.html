@@ -1,0 +1,881 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Casa O'Connor — Listing Presentation by Amy Rex</title>
+  <meta name="description" content="Listing presentation for Casa O'Connor, Todos Santos BCS. Prepared by Amy Rex, South Baja Realtors." />
+  <meta name="robots" content="noindex, nofollow" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Adelle+Sans:wght@300;400;600&display=swap" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+
+  <style>
+    :root {
+      --terra:      #A47B67;
+      --terra-dark: #7A5548;
+      --cream:      #F6EDE4;
+      --grey:       #CCC9C6;
+      --dark:       #2E2520;
+      --mid:        #6B5B52;
+      --light-bg:   #FAF5F0;
+      --white:      #FFFFFF;
+      --serif:      'Cormorant Garamond', Georgia, serif;
+      --sans:       'Adelle Sans', 'Gill Sans', sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--sans); background: var(--light-bg); color: var(--dark); overflow-x: hidden; line-height: 1.6; }
+    img { display: block; max-width: 100%; }
+    a { text-decoration: none; color: inherit; }
+
+    /* ── Nav ─────────────────────────────────── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.1rem 2.5rem;
+      background: rgba(250,245,240,0.95);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.3s;
+    }
+    nav.scrolled { border-bottom-color: var(--grey); }
+    .nav-brand { font-family: var(--serif); font-size: 1rem; font-weight: 600; color: var(--dark); }
+    .nav-brand span { color: var(--terra); }
+    .nav-tag {
+      font-size: 0.68rem; font-weight: 600; letter-spacing: 0.18em;
+      text-transform: uppercase; color: var(--terra);
+      border: 1px solid var(--terra); padding: 0.45rem 1rem;
+    }
+
+    /* ── Hero ────────────────────────────────── */
+    .hero {
+      position: relative;
+      height: 100svh; min-height: 600px;
+      display: flex; align-items: flex-end;
+      background: var(--dark);
+      overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute; inset: 0;
+      background: linear-gradient(160deg, rgba(46,37,32,0.78) 0%, rgba(164,123,103,0.5) 100%),
+                  url('images/hero.jpg') center/cover no-repeat;
+    }
+    .hero-bg-placeholder {
+      position: absolute; inset: 0;
+      background: linear-gradient(160deg, #2E2520 0%, #7A5548 100%);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase;
+      color: rgba(255,255,255,0.2);
+    }
+    .hero-content {
+      position: relative; z-index: 2;
+      padding: 0 3rem 4.5rem;
+      max-width: 780px;
+      animation: fadeUp 1s ease-out;
+    }
+    @keyframes fadeUp { from { opacity:0; transform:translateY(24px); } to { opacity:1; transform:translateY(0); } }
+    .hero-eyebrow {
+      font-size: 0.72rem; letter-spacing: 0.24em; text-transform: uppercase;
+      color: var(--grey); margin-bottom: 1rem;
+      display: flex; align-items: center; gap: 0.8rem;
+    }
+    .hero-eyebrow::before { content:''; width:2rem; height:1.5px; background:var(--terra); }
+    .hero h1 {
+      font-family: var(--serif);
+      font-size: clamp(3rem, 6.5vw, 5.2rem);
+      font-weight: 300; line-height: 1.05; color: var(--white);
+      margin-bottom: 0.6rem;
+    }
+    .hero h1 em { font-style: italic; }
+    .hero-sub {
+      font-size: 1rem; color: rgba(246,237,228,0.75);
+      letter-spacing: 0.06em; margin-bottom: 2.5rem;
+    }
+    .hero-specs { display: flex; gap: 2.5rem; flex-wrap: wrap; }
+    .spec-val {
+      font-family: var(--serif); font-size: 1.8rem; font-weight: 600;
+      color: var(--white); line-height: 1;
+    }
+    .spec-lbl {
+      font-size: 0.68rem; letter-spacing: 0.14em; text-transform: uppercase;
+      color: rgba(204,201,198,0.8); margin-top: 0.2rem;
+    }
+    .hero-badge {
+      position: absolute; top: 2.5rem; right: 2.5rem; z-index: 3;
+      background: var(--terra); color: var(--white);
+      font-size: 0.78rem; font-weight: 600; letter-spacing: 0.1em;
+      text-transform: uppercase; padding: 0.7rem 1.4rem;
+    }
+    .hero-presenter {
+      position: absolute; top: 2.5rem; left: 3rem; z-index: 3;
+      font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase;
+      color: rgba(246,237,228,0.65);
+    }
+
+    /* ── Shared ──────────────────────────────── */
+    .container { max-width: 1100px; margin: 0 auto; padding: 0 2.5rem; }
+    section { padding: 6rem 0; }
+    .sec-label {
+      font-size: 0.68rem; font-weight: 600; letter-spacing: 0.22em;
+      text-transform: uppercase; color: var(--terra); margin-bottom: 0.6rem;
+    }
+    .sec-num {
+      font-family: var(--serif); font-size: 0.82rem; letter-spacing: 0.2em;
+      text-transform: uppercase; color: var(--terra); margin-bottom: 0.5rem;
+    }
+    .sec-title {
+      font-family: var(--serif);
+      font-size: clamp(1.9rem, 3.5vw, 2.8rem);
+      font-weight: 300; line-height: 1.15; color: var(--dark);
+      margin-bottom: 1rem;
+    }
+    .sec-body { font-size: 0.95rem; line-height: 1.85; color: var(--mid); max-width: 600px; }
+    .divider { width: 40px; height: 2px; background: var(--terra); margin: 1.2rem 0 2rem; }
+
+    .fade-in { opacity:0; transform:translateY(18px); transition: opacity 0.65s ease, transform 0.65s ease; }
+    .fade-in.visible { opacity:1; transform:translateY(0); }
+
+    /* ── Section: dark bg ────────────────────── */
+    .dark-section { background: var(--dark); }
+    .dark-section .sec-title { color: var(--cream); }
+    .dark-section .sec-body  { color: var(--grey); }
+
+    /* ── Section: white bg ───────────────────── */
+    .white-section { background: var(--white); }
+
+    /* ── 01 — THE RECORD ─────────────────────── */
+    .record-section { background: var(--dark); }
+    .record-intro { max-width: 680px; margin-bottom: 3.5rem; }
+    .record-intro .sec-title { color: var(--cream); }
+    .record-intro p { color: var(--grey); font-size: 0.95rem; line-height: 1.85; margin-top: 1rem; }
+
+    .timeline { display: flex; flex-direction: column; gap: 1px; }
+    .tl-item {
+      display: grid; grid-template-columns: 200px 1fr auto;
+      gap: 2rem; align-items: center;
+      padding: 1.5rem 1.8rem;
+      background: rgba(255,255,255,0.03);
+      border-left: 3px solid transparent;
+      transition: background 0.2s;
+    }
+    .tl-item.expired  { border-left-color: #B85B00; }
+    .tl-item.cancelled { border-left-color: #8B3030; }
+    .tl-period { font-size: 0.78rem; letter-spacing: 0.05em; color: rgba(204,201,198,0.6); }
+    .tl-name { font-family: var(--serif); font-size: 1.1rem; color: var(--cream); margin-bottom: 0.25rem; }
+    .tl-meta { font-size: 0.78rem; color: rgba(204,201,198,0.5); }
+    .tl-right { text-align: right; }
+    .tl-price { font-family: var(--serif); font-size: 1.4rem; color: var(--cream); }
+    .tl-status {
+      font-size: 0.65rem; font-weight: 600; letter-spacing: 0.14em;
+      text-transform: uppercase; margin-top: 0.2rem;
+    }
+    .tl-status.expired   { color: #D4763A; }
+    .tl-status.cancelled { color: #C45050; }
+
+    .record-total {
+      margin-top: 2rem; padding: 1.8rem 2rem;
+      background: rgba(164,123,103,0.12);
+      border: 1px solid rgba(164,123,103,0.3);
+      display: flex; gap: 3rem; flex-wrap: wrap; align-items: center;
+    }
+    .rt-stat { }
+    .rt-val {
+      font-family: var(--serif); font-size: 2.4rem; font-weight: 600;
+      color: var(--terra); line-height: 1;
+    }
+    .rt-lbl {
+      font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--grey); margin-top: 0.25rem;
+    }
+    .record-verdict {
+      margin-top: 2.5rem; padding: 1.8rem 2rem;
+      border-left: 3px solid var(--terra);
+      background: rgba(255,255,255,0.03);
+    }
+    .record-verdict p {
+      font-family: var(--serif); font-size: 1.15rem; font-style: italic;
+      color: var(--cream); line-height: 1.7;
+    }
+
+    /* ── 02 — THE PROPERTY ───────────────────── */
+    .property-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 0; }
+    .property-image {
+      position: relative; min-height: 500px;
+      background: var(--cream); overflow: hidden;
+    }
+    .property-image img {
+      width: 100%; height: 100%; object-fit: cover;
+      opacity: 0; transition: opacity 0.7s;
+    }
+    .property-image img.loaded { opacity: 1; }
+    .property-image-ph {
+      position: absolute; inset: 0;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--grey);
+    }
+    .property-text { padding: 5rem 3.5rem; background: var(--white); }
+
+    .prop-specs {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;
+      margin-top: 2.5rem;
+    }
+    .ps-item { padding: 1.1rem 1.3rem; background: var(--light-bg); border-left: 2px solid var(--terra); }
+    .ps-lbl { font-size: 0.65rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--terra); margin-bottom: 0.3rem; }
+    .ps-val { font-size: 0.95rem; font-weight: 600; color: var(--dark); }
+
+    /* ── Prep Work ───────────────────────────── */
+    .prep-section { background: var(--cream); }
+    .prep-intro { max-width: 620px; margin-bottom: 3rem; }
+    .prep-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px,1fr)); gap: 1rem; }
+    .prep-card {
+      background: var(--white); padding: 1.6rem 1.8rem;
+      border-top: 3px solid var(--terra);
+      box-shadow: 0 2px 12px rgba(46,37,32,0.06);
+    }
+    .prep-card h4 { font-family: var(--serif); font-size: 1.1rem; color: var(--dark); margin-bottom: 0.5rem; }
+    .prep-card p { font-size: 0.88rem; line-height: 1.7; color: var(--mid); }
+
+    /* ── 03 — MARKET ANALYSIS ────────────────── */
+    .market-section { background: var(--white); }
+    .market-grid {
+      display: grid; grid-template-columns: repeat(4,1fr);
+      gap: 1rem; margin: 2.5rem 0;
+    }
+    .mstat {
+      padding: 1.6rem 1.2rem;
+      background: var(--light-bg);
+      border-bottom: 3px solid var(--terra);
+    }
+    .mstat-val {
+      font-family: var(--serif); font-size: 2rem; font-weight: 600;
+      color: var(--dark); line-height: 1; margin-bottom: 0.35rem;
+    }
+    .mstat-lbl { font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--mid); }
+
+    .comps-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; margin-top: 2.5rem; }
+    .comps-table th {
+      background: var(--dark); color: var(--cream);
+      padding: 0.8rem 1rem; text-align: left;
+      font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase;
+      font-weight: 600;
+    }
+    .comps-table td { padding: 0.85rem 1rem; border-bottom: 1px solid var(--grey); color: var(--mid); }
+    .comps-table tr:nth-child(even) td { background: var(--light-bg); }
+    .comps-table tr.highlight td { background: rgba(164,123,103,0.08); color: var(--dark); font-weight: 600; }
+    .comps-table tr.highlight td:first-child { border-left: 3px solid var(--terra); }
+
+    .market-note {
+      margin-top: 2rem; padding: 1.6rem 2rem;
+      border-left: 3px solid var(--terra);
+      background: var(--light-bg);
+    }
+    .market-note p { font-size: 0.9rem; line-height: 1.8; color: var(--mid); }
+    .market-note strong { color: var(--dark); }
+
+    /* chart */
+    .chart-section { background: var(--dark); }
+    .chart-wrap { background: rgba(255,255,255,0.04); padding: 2rem; margin-top: 2.5rem; }
+    .chart-wrap h3 { font-family: var(--serif); font-size: 1.1rem; color: var(--cream); margin-bottom: 1.5rem; }
+
+    /* ── 04 — PRICE RATIONALE ────────────────── */
+    .price-section { background: var(--light-bg); }
+    .price-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: start; margin-top: 3rem; }
+    .price-box {
+      background: var(--dark); padding: 3rem 2.5rem; text-align: center;
+    }
+    .price-box-label {
+      font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--grey); margin-bottom: 0.8rem;
+    }
+    .price-big {
+      font-family: var(--serif); font-size: 4rem; font-weight: 300;
+      color: var(--white); line-height: 1; margin-bottom: 0.5rem;
+    }
+    .price-currency { font-size: 0.85rem; letter-spacing: 0.14em; color: var(--grey); }
+    .price-divider { width: 40px; height: 1px; background: var(--terra); margin: 1.5rem auto; }
+    .price-rows { margin-top: 1rem; display: flex; flex-direction: column; gap: 0; }
+    .price-row {
+      display: flex; justify-content: space-between;
+      padding: 0.8rem 0; border-bottom: 1px solid rgba(255,255,255,0.07);
+      font-size: 0.85rem;
+    }
+    .price-row-lbl { color: var(--grey); }
+    .price-row-val { color: var(--cream); font-weight: 600; }
+
+    .price-rationale { display: flex; flex-direction: column; gap: 1.2rem; }
+    .rat-item {
+      padding: 1.4rem 1.6rem;
+      background: var(--white);
+      border-left: 3px solid var(--terra);
+      box-shadow: 0 2px 8px rgba(46,37,32,0.05);
+    }
+    .rat-item h4 { font-family: var(--serif); font-size: 1.05rem; color: var(--dark); margin-bottom: 0.35rem; }
+    .rat-item p { font-size: 0.88rem; line-height: 1.7; color: var(--mid); }
+
+    /* ── 05 — WHY AMY ────────────────────────── */
+    .amy-section { background: var(--dark); }
+    .amy-intro { max-width: 660px; margin-bottom: 3.5rem; }
+    .amy-intro .sec-title { color: var(--cream); }
+    .amy-intro p { color: var(--grey); font-size: 0.95rem; line-height: 1.85; margin-top: 1rem; }
+
+    .amy-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px,1fr)); gap: 1px; background: rgba(255,255,255,0.06); }
+    .amy-card {
+      background: var(--dark); padding: 2rem 1.8rem;
+      border-top: 2px solid var(--terra);
+    }
+    .amy-card-label {
+      font-size: 0.68rem; letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--terra); margin-bottom: 0.6rem;
+    }
+    .amy-card-title { font-family: var(--serif); font-size: 1.15rem; color: var(--cream); margin-bottom: 0.5rem; }
+    .amy-card p { font-size: 0.87rem; line-height: 1.75; color: var(--grey); }
+
+    .amy-diff {
+      margin-top: 2.5rem; padding: 2rem 2.5rem;
+      background: rgba(164,123,103,0.1);
+      border: 1px solid rgba(164,123,103,0.3);
+    }
+    .amy-diff h3 { font-family: var(--serif); font-size: 1.2rem; color: var(--cream); margin-bottom: 1rem; }
+    .amy-diff ul { list-style: none; display: flex; flex-direction: column; gap: 0.7rem; }
+    .amy-diff li { font-size: 0.9rem; color: var(--grey); padding-left: 1.2rem; position: relative; line-height: 1.65; }
+    .amy-diff li::before { content: '→'; position: absolute; left: 0; color: var(--terra); }
+    .amy-diff strong { color: var(--cream); }
+
+    /* ── 06 — MARKETING ──────────────────────── */
+    .marketing-section { background: var(--white); }
+    .mkt-phases { display: grid; gap: 1rem; margin-top: 3rem; }
+    .mkt-phase {
+      display: grid; grid-template-columns: 160px 1fr;
+      border: 1px solid var(--grey);
+    }
+    .mkt-phase-num {
+      background: var(--terra); color: var(--white);
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      padding: 1.5rem 1rem; text-align: center;
+    }
+    .mkt-phase-num span:first-child { font-family: var(--serif); font-size: 2rem; font-weight: 300; line-height: 1; }
+    .mkt-phase-num span:last-child { font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase; margin-top: 0.3rem; opacity: 0.85; }
+    .mkt-phase-content { padding: 1.5rem 2rem; }
+    .mkt-phase-content h4 { font-family: var(--serif); font-size: 1.15rem; color: var(--dark); margin-bottom: 0.8rem; }
+    .mkt-phase-content ul { list-style: none; display: flex; flex-direction: column; gap: 0.45rem; }
+    .mkt-phase-content li { font-size: 0.88rem; color: var(--mid); padding-left: 1.1rem; position: relative; }
+    .mkt-phase-content li::before { content: '+'; position: absolute; left: 0; color: var(--terra); font-weight: 700; }
+
+    /* ── CTA ─────────────────────────────────── */
+    .cta-section {
+      background: var(--terra);
+      padding: 5rem 2.5rem;
+      text-align: center;
+    }
+    .cta-section h2 {
+      font-family: var(--serif); font-size: clamp(2.2rem, 4vw, 3.2rem);
+      font-weight: 300; color: var(--white); margin-bottom: 0.75rem;
+    }
+    .cta-section p { font-size: 1.05rem; color: rgba(246,237,228,0.85); margin-bottom: 2.5rem; }
+    .cta-card {
+      display: inline-flex; flex-direction: column; gap: 0.5rem;
+      background: rgba(255,255,255,0.15);
+      border: 1px solid rgba(255,255,255,0.25);
+      padding: 1.8rem 3.5rem;
+    }
+    .cta-card-label { font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(246,237,228,0.7); }
+    .cta-card-val { font-size: 1.15rem; font-weight: 600; color: var(--white); }
+
+    /* ── Footer ──────────────────────────────── */
+    footer {
+      background: var(--dark); color: var(--grey);
+      padding: 2.5rem; text-align: center;
+    }
+    footer p { font-size: 0.82rem; line-height: 1.9; opacity: 0.75; }
+    footer a { color: var(--terra); }
+
+    /* ── Responsive ──────────────────────────── */
+    @media (max-width: 900px) {
+      .property-layout { grid-template-columns: 1fr; }
+      .property-image { min-height: 280px; }
+      .price-layout { grid-template-columns: 1fr; }
+      .market-grid { grid-template-columns: 1fr 1fr; }
+      .mkt-phase { grid-template-columns: 100px 1fr; }
+      .tl-item { grid-template-columns: 1fr; gap: 0.4rem; }
+      .tl-right { text-align: left; }
+    }
+    @media (max-width: 600px) {
+      nav { padding: 1rem 1.2rem; }
+      section { padding: 4rem 0; }
+      .container { padding: 0 1.4rem; }
+      .hero-content { padding: 0 1.4rem 3rem; }
+      .hero-badge { top: 1.5rem; right: 1.4rem; }
+      .hero-presenter { left: 1.4rem; }
+      .market-grid { grid-template-columns: 1fr 1fr; }
+      .prop-specs { grid-template-columns: 1fr; }
+      .mkt-phase { grid-template-columns: 1fr; }
+      .mkt-phase-num { flex-direction: row; gap: 0.5rem; padding: 1rem 1.4rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="main-nav">
+  <div class="nav-brand">Casa <span>O'Connor</span></div>
+  <div class="nav-tag">Listing Presentation</div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-bg-placeholder">images/hero.jpg</div>
+  <div class="hero-bg"></div>
+  <div class="hero-presenter">Amy Rex · South Baja Realtors</div>
+  <div class="hero-badge">Recommended at $290,000</div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">Listing Presentation · Confidential</div>
+    <h1><em>Casa</em> O'Connor</h1>
+    <p class="hero-sub">Downtown Todos Santos · San Vicente · Baja California Sur</p>
+    <div class="hero-specs">
+      <div>
+        <div class="spec-val">3</div>
+        <div class="spec-lbl">Bedrooms</div>
+      </div>
+      <div>
+        <div class="spec-val">2</div>
+        <div class="spec-lbl">Bathrooms</div>
+      </div>
+      <div>
+        <div class="spec-val">1,065</div>
+        <div class="spec-lbl">sq ft</div>
+      </div>
+      <div>
+        <div class="spec-val">305</div>
+        <div class="spec-lbl">m² lot</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 01 — THE RECORD -->
+<section class="record-section" id="history">
+  <div class="container">
+    <div class="record-intro fade-in">
+      <div class="sec-num">01</div>
+      <h2 class="sec-title">The Record<br>Tells a Story.</h2>
+      <p>This property has been on the market twice in two years, with two different agents, two different names, and two different strategies. Neither resulted in a sale. Before recommending a path forward, it's worth understanding exactly what happened — and why it didn't work.</p>
+    </div>
+
+    <div class="timeline fade-in">
+      <div class="tl-item expired">
+        <div class="tl-period">Nov 2023 – May 2024</div>
+        <div>
+          <div class="tl-name">Casa Las Palapas</div>
+          <div class="tl-meta">MLS 23-4440 · Diamante Realtors · 183 days on market</div>
+        </div>
+        <div class="tl-right">
+          <div class="tl-price">$329,000</div>
+          <div class="tl-status expired">Expired</div>
+        </div>
+      </div>
+      <div class="tl-item cancelled">
+        <div class="tl-period">May 2024 – Jan 2025</div>
+        <div>
+          <div class="tl-name">Casa Bonita</div>
+          <div class="tl-meta">MLS 24-2481 · Remax Cabo Sanctuary · 232 days on market</div>
+        </div>
+        <div class="tl-right">
+          <div class="tl-price">$262,000</div>
+          <div class="tl-status cancelled">Cancelled</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="record-total fade-in">
+      <div class="rt-stat">
+        <div class="rt-val">415</div>
+        <div class="rt-lbl">Days on market</div>
+      </div>
+      <div class="rt-stat">
+        <div class="rt-val">2</div>
+        <div class="rt-lbl">Agents</div>
+      </div>
+      <div class="rt-stat">
+        <div class="rt-val">$0</div>
+        <div class="rt-lbl">Sold price</div>
+      </div>
+      <div class="rt-stat">
+        <div class="rt-val">−$67K</div>
+        <div class="rt-lbl">Price reduction across attempts</div>
+      </div>
+    </div>
+
+    <div class="record-verdict fade-in">
+      <p>"Overpriced at the start, under-marketed throughout — and the price corrections came too late to create urgency. This property has the bones to sell quickly. What it needs is an honest price from day one, and a marketing strategy built for the international buyer who is actually looking in Todos Santos."</p>
+      <p style="font-family: var(--sans); font-size:0.8rem; color: var(--mid); font-style:normal; margin-top:1rem;">— Amy Rex, South Baja Realtors</p>
+    </div>
+  </div>
+</section>
+
+<!-- 02 — THE PROPERTY -->
+<div class="property-layout" id="property">
+  <div class="property-image">
+    <div class="property-image-ph">images/exterior.jpg</div>
+    <img src="images/exterior.jpg" alt="Casa O'Connor exterior, Todos Santos"
+         onload="this.classList.add('loaded')" />
+  </div>
+  <div class="property-text">
+    <div class="sec-num">02</div>
+    <h2 class="sec-title">The Property</h2>
+    <div class="divider"></div>
+    <p class="sec-body">A genuine Todos Santos character home — colonial two-story construction in the San Vicente neighborhood, steps from the historic center. Well-maintained structure with beautiful natural light throughout, a private back garden, and a palapa that makes the outdoor space a natural gathering point. Tiles, windows, and core construction are solid.</p>
+    <div class="prop-specs">
+      <div class="ps-item"><div class="ps-lbl">Bedrooms</div><div class="ps-val">3</div></div>
+      <div class="ps-item"><div class="ps-lbl">Bathrooms</div><div class="ps-val">2 Full</div></div>
+      <div class="ps-item"><div class="ps-lbl">Living Area</div><div class="ps-val">1,065 sq ft</div></div>
+      <div class="ps-item"><div class="ps-lbl">Lot Size</div><div class="ps-val">305 m²</div></div>
+      <div class="ps-item"><div class="ps-lbl">Style</div><div class="ps-val">Colonial · Two Story</div></div>
+      <div class="ps-item"><div class="ps-lbl">Layout</div><div class="ps-val">1 bed down · 2 + loft up</div></div>
+      <div class="ps-item"><div class="ps-lbl">Kitchen</div><div class="ps-val">Open · dining nook</div></div>
+      <div class="ps-item"><div class="ps-lbl">Outdoor</div><div class="ps-val">Garden · Palapa · Patio</div></div>
+      <div class="ps-item"><div class="ps-lbl">Title</div><div class="ps-val">Fideicomiso · Banorte</div></div>
+      <div class="ps-item"><div class="ps-lbl">Utilities</div><div class="ps-val">CFE · Municipal water</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- PREP WORK -->
+<section class="prep-section" id="prep">
+  <div class="container">
+    <div class="prep-intro fade-in">
+      <div class="sec-label">Before We List</div>
+      <h2 class="sec-title">A small investment.<br>A significantly better first impression.</h2>
+      <p class="sec-body">The property is structurally sound and well-built. A focused pre-listing prep will address the cosmetic and maintenance items that affect how buyers perceive value — and how the home photographs. These are not major renovations; they are targeted fixes that will directly impact offers.</p>
+    </div>
+    <div class="prep-grid fade-in">
+      <div class="prep-card">
+        <h4>Deep Clean</h4>
+        <p>Full interior and exterior professional cleaning. First impressions are made in the first 30 seconds of a showing and the first photo online.</p>
+      </div>
+      <div class="prep-card">
+        <h4>Palapa & Garden</h4>
+        <p>Palapa maintenance and palm trimming to restore the outdoor space. The back garden is a genuine selling point — it should look the part.</p>
+      </div>
+      <div class="prep-card">
+        <h4>Plumbing & Drainage</h4>
+        <p>Pipe cleaning and septic check to address the drainage odor. Any smell during a showing kills a deal. This is non-negotiable before listing.</p>
+      </div>
+      <div class="prep-card">
+        <h4>Paint Touch-Ups</h4>
+        <p>Ironwork and exterior paint detail work. These small cosmetic finishes signal maintenance and care to buyers evaluating long-distance.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 03 — MARKET ANALYSIS -->
+<section class="market-section" id="market">
+  <div class="container">
+    <div class="fade-in">
+      <div class="sec-num">03</div>
+      <h2 class="sec-title">What the Market<br>Actually Says.</h2>
+      <p class="sec-body">Based on 10 closed sales in the Todos Santos Pacific zone over the past 12 months — homes comparable in bedroom count to this property. The data is clear about what buyers are willing to pay, how long they take to decide, and what discount they expect.</p>
+    </div>
+
+    <div class="market-grid fade-in">
+      <div class="mstat">
+        <div class="mstat-val">$412K</div>
+        <div class="mstat-lbl">Median sold price</div>
+      </div>
+      <div class="mstat">
+        <div class="mstat-val">95%</div>
+        <div class="mstat-lbl">Avg. sale / list ratio</div>
+      </div>
+      <div class="mstat">
+        <div class="mstat-val">265</div>
+        <div class="mstat-lbl">Avg. days on market</div>
+      </div>
+      <div class="mstat">
+        <div class="mstat-val">$215</div>
+        <div class="mstat-lbl">Low sold $/sqft</div>
+      </div>
+    </div>
+
+    <table class="comps-table fade-in">
+      <thead>
+        <tr>
+          <th>Property</th>
+          <th>Bed</th>
+          <th>Sq ft</th>
+          <th>Sold Price</th>
+          <th>DOM</th>
+          <th>$/sqft</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Casa Flip Flop</td><td>3</td><td>1,173</td><td>$215,000</td><td>441</td><td>$183</td></tr>
+        <tr><td>CASA ESCAPA</td><td>2</td><td>818</td><td>$312,000</td><td>65</td><td>$381</td></tr>
+        <tr><td>Bridge House</td><td>3</td><td>1,851</td><td>$340,000</td><td>95</td><td>$184</td></tr>
+        <tr><td>Casa Che Todos Santos</td><td>3</td><td>1,883</td><td>$360,000</td><td>143</td><td>$191</td></tr>
+        <tr><td>Oasis Escondida</td><td>3</td><td>2,087</td><td>$465,000</td><td>572</td><td>$223</td></tr>
+        <tr><td>Casa Santeños</td><td>2</td><td>2,195</td><td>$470,000</td><td>328</td><td>$214</td></tr>
+        <tr><td>Casa Simpatica</td><td>2</td><td>2,593</td><td>$555,000</td><td>369</td><td>$214</td></tr>
+        <tr class="highlight"><td>Casa O'Connor (recommended)</td><td>3</td><td>1,065</td><td>$290,000</td><td>—</td><td>$272</td></tr>
+      </tbody>
+    </table>
+
+    <div class="market-note fade-in">
+      <p><strong>On lot size:</strong> Casa O'Connor's 305 m² lot is smaller than the market average (~1,082 m² for closed comps). This is an honest limitation that has to be factored into the price — it's a reason $290K makes sense, not $380K. Buyers purchasing large-lot properties in this market are paying for land as much as construction. This property's value is in its location, character, and livability — not land area.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CHART -->
+<section class="chart-section dark-section">
+  <div class="container">
+    <div class="fade-in">
+      <div class="sec-num" style="color:var(--terra)">Market</div>
+      <h2 class="sec-title" style="color:var(--cream)">Comparable Sold Prices</h2>
+      <p class="sec-body" style="color:var(--grey)">All closed transactions · Todos Santos Pacific zone · 2-3 bedrooms · last 12 months</p>
+    </div>
+    <div class="chart-wrap fade-in">
+      <h3>Closed Sales vs. Casa O'Connor Recommendation</h3>
+      <canvas id="marketChart"></canvas>
+    </div>
+  </div>
+</section>
+
+<!-- 04 — PRICE -->
+<section class="price-section" id="pricing">
+  <div class="container">
+    <div class="fade-in">
+      <div class="sec-num">04</div>
+      <h2 class="sec-title">The Right Price,<br>From Day One.</h2>
+      <p class="sec-body">The previous attempts started too high, then reduced — which signals desperation to buyers without creating urgency. The strategy this time is different: price it correctly from the first day, generate early momentum, and close within 90–120 days.</p>
+    </div>
+    <div class="price-layout fade-in">
+      <div class="price-box">
+        <div class="price-box-label">Amy Rex Recommended List Price</div>
+        <div class="price-big">$290,000</div>
+        <div class="price-currency">USD</div>
+        <div class="price-divider"></div>
+        <div class="price-rows">
+          <div class="price-row">
+            <span class="price-row-lbl">Price per sq ft</span>
+            <span class="price-row-val">~$272</span>
+          </div>
+          <div class="price-row">
+            <span class="price-row-lbl">Expected sale (95% ratio)</span>
+            <span class="price-row-val">~$275,500</span>
+          </div>
+          <div class="price-row">
+            <span class="price-row-lbl">Target days on market</span>
+            <span class="price-row-val">90–120 days</span>
+          </div>
+          <div class="price-row">
+            <span class="price-row-lbl">Lot size context</span>
+            <span class="price-row-val">305 m² · priced accordingly</span>
+          </div>
+          <div class="price-row">
+            <span class="price-row-lbl">Previous attempts</span>
+            <span class="price-row-val">415 days · unsold</span>
+          </div>
+        </div>
+      </div>
+      <div class="price-rationale">
+        <div class="rat-item">
+          <h4>Why not higher?</h4>
+          <p>The market has already rejected $329K and $262K with extended exposure. The lot at 305 m² limits the upside — comparables with larger land are priced accordingly. $290K creates real buyer urgency without leaving significant money on the table relative to what this property can actually achieve.</p>
+        </div>
+        <div class="rat-item">
+          <h4>Why not lower?</h4>
+          <p>At $272/sqft, this is competitive — not desperate. The location in downtown Todos Santos, the colonial character, and the palapa outdoor space all justify being above the lowest comps in the market.</p>
+        </div>
+        <div class="rat-item">
+          <h4>The first 30 days matter most.</h4>
+          <p>New listings receive their highest visibility in the first 30 days on MLS and digital channels. A correctly priced property generates showings immediately. Price reductions later never recapture that first-impression traffic.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 05 — WHY AMY -->
+<section class="amy-section dark-section" id="why-amy">
+  <div class="container">
+    <div class="amy-intro fade-in">
+      <div class="sec-num" style="color:var(--terra)">05</div>
+      <h2 class="sec-title">Why Amy Rex.</h2>
+      <p>Two agents couldn't sell this property. The question isn't whether the house is sellable — it is. The question is whether the representation, the price, and the marketing are finally aligned. Here's what's different this time.</p>
+    </div>
+    <div class="amy-grid fade-in">
+      <div class="amy-card">
+        <div class="amy-card-label">Local Expertise</div>
+        <div class="amy-card-title">Todos Santos Specialist</div>
+        <p>Amy lives and works in Todos Santos. She knows the San Vicente neighborhood, the buyer profile for downtown properties, and the agents in the market who bring serious offers.</p>
+      </div>
+      <div class="amy-card">
+        <div class="amy-card-label">Track Record</div>
+        <div class="amy-card-title">Active Portfolio</div>
+        <p>Current and recent representation includes Costa Eterea, Casa Perícu, Villa Aguamarina, Casa Cashin — properties across the full spectrum of the Todos Santos market.</p>
+      </div>
+      <div class="amy-card">
+        <div class="amy-card-label">Network</div>
+        <div class="amy-card-title">South Baja Realtors</div>
+        <p>Affiliation with South Baja Realtors provides MLS access, co-brokerage reach across BCS, and agent-to-agent relationships in La Paz and Los Cabos.</p>
+      </div>
+      <div class="amy-card">
+        <div class="amy-card-label">Digital Presence</div>
+        <div class="amy-card-title">Built for This Buyer</div>
+        <p>The international buyer searching for property in Todos Santos finds Amy online. Established website, social following, and email database — no startup lag.</p>
+      </div>
+    </div>
+    <div class="amy-diff fade-in">
+      <h3>What's Different This Time</h3>
+      <ul>
+        <li><strong>Honest price from listing day.</strong> No starting high and reducing — that strategy has already been proven not to work for this property.</li>
+        <li><strong>Pre-listing prep first.</strong> The property will be photographed after the maintenance work is done, not before. Photos that show a clean, well-maintained home close deals.</li>
+        <li><strong>Dedicated landing page + MLS.</strong> Every serious buyer gets a full marketing experience — not just a listing card.</li>
+        <li><strong>International buyer focus.</strong> The buyer for a downtown Todos Santos colonial is coming from the US or Canada. Amy's marketing channels reach them directly.</li>
+        <li><strong>Transparent reporting.</strong> Regular updates on showings, inquiries, and market feedback — so you're never guessing where things stand.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 06 — MARKETING -->
+<section class="marketing-section white-section" id="marketing">
+  <div class="container">
+    <div class="fade-in">
+      <div class="sec-num">06</div>
+      <h2 class="sec-title">The Marketing Plan.</h2>
+      <p class="sec-body">A sequenced approach that maximizes the critical first-30-day window and sustains exposure until close.</p>
+    </div>
+    <div class="mkt-phases fade-in">
+      <div class="mkt-phase">
+        <div class="mkt-phase-num">
+          <span>01</span>
+          <span>Pre-Launch</span>
+        </div>
+        <div class="mkt-phase-content">
+          <h4>Prep & Production (Weeks 1–2)</h4>
+          <ul>
+            <li>Complete all pre-listing maintenance and cleaning</li>
+            <li>Professional photography session after prep work is done</li>
+            <li>Dedicated property landing page live at amyrextodossantos.com</li>
+            <li>Prepare PDF brochure and digital deck for broker network</li>
+            <li>Coordinate South Baja Realtors broker preview</li>
+          </ul>
+        </div>
+      </div>
+      <div class="mkt-phase">
+        <div class="mkt-phase-num">
+          <span>02</span>
+          <span>Launch</span>
+        </div>
+        <div class="mkt-phase-content">
+          <h4>Go Live (Weeks 3–6)</h4>
+          <ul>
+            <li>MLS listing for full agent-to-agent visibility across BCS</li>
+            <li>Featured on amyrextodossantos.com and southbajarealtors.com</li>
+            <li>Email blast to international buyer and investor database</li>
+            <li>Social media launch across Amy's channels</li>
+            <li>Targeted Facebook/Instagram ads to Todos Santos buyer demographic</li>
+          </ul>
+        </div>
+      </div>
+      <div class="mkt-phase">
+        <div class="mkt-phase-num">
+          <span>03</span>
+          <span>Sustained</span>
+        </div>
+        <div class="mkt-phase-content">
+          <h4>Until Close (Ongoing)</h4>
+          <ul>
+            <li>Weekly social content featuring property and Todos Santos lifestyle</li>
+            <li>Monthly newsletter feature to full client database</li>
+            <li>Active outreach to La Paz and Los Cabos broker community</li>
+            <li>Private tours with follow-up for every qualified showing</li>
+            <li>Bi-weekly activity and feedback reports to owner</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="container">
+    <h2>Let's Get This Property Sold.</h2>
+    <p>Amy Rex is ready to move forward — starting with the prep work, then a clean launch.</p>
+    <div class="cta-card">
+      <div class="cta-card-label">Contact Amy Rex · South Baja Realtors</div>
+      <div class="cta-card-val">amy@amyrextodossantos.com</div>
+      <div class="cta-card-val">+52 (612) 123-5434</div>
+      <div class="cta-card-val" style="font-size:0.95rem;opacity:0.8">amyrextodossantos.com</div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <p>Amy Rex Property Management &amp; Real Estate · South Baja Realtors</p>
+    <p>Álvaro Obregón 774 entre Allende y Juárez, Col. Centro, La Paz, BCS 23000</p>
+    <p style="margin-top:0.6rem;">
+      <a href="https://amyrextodossantos.com">amyrextodossantos.com</a>
+      &nbsp;·&nbsp;
+      <a href="https://southbajarealtors.com">southbajarealtors.com</a>
+    </p>
+    <p style="margin-top:0.8rem;font-size:0.75rem;">Prepared by Amy Rex for Kevin O'Connor · Confidential · © 2026</p>
+  </div>
+</footer>
+
+<script>
+  // Nav scroll
+  const nav = document.getElementById('main-nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 40);
+  }, { passive: true });
+
+  // Fade-in
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+  document.querySelectorAll('.fade-in').forEach(el => obs.observe(el));
+
+  // Chart
+  const ctx = document.getElementById('marketChart').getContext('2d');
+  new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: ['Casa Flip Flop', 'CASA ESCAPA', 'Bridge House', 'Casa Che', 'Oasis Escondida', 'Casa Santeños', 'Casa Simpatica', "Casa O'Connor\n(Recommended)"],
+      datasets: [{
+        label: 'Price (USD)',
+        data: [215000, 312000, 340000, 360000, 465000, 470000, 555000, 290000],
+        backgroundColor: [
+          'rgba(164,123,103,0.5)','rgba(164,123,103,0.5)','rgba(164,123,103,0.5)',
+          'rgba(164,123,103,0.5)','rgba(164,123,103,0.5)','rgba(164,123,103,0.5)',
+          'rgba(164,123,103,0.5)','rgba(164,123,103,1)'
+        ],
+        borderColor: ['#A47B67','#A47B67','#A47B67','#A47B67','#A47B67','#A47B67','#A47B67','#A47B67'],
+        borderWidth: 1
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: { display: false },
+        tooltip: { callbacks: { label: c => '$' + c.parsed.y.toLocaleString() } }
+      },
+      scales: {
+        x: { ticks: { color: '#CCC9C6', font: { family: 'Adelle Sans', size: 10 } }, grid: { color: 'rgba(204,201,198,0.08)' } },
+        y: { beginAtZero: false, min: 150000, ticks: { color: '#CCC9C6', font: { size: 11 }, callback: v => '$' + (v/1000) + 'K' }, grid: { color: 'rgba(204,201,198,0.08)' } }
+      }
+    }
+  });
+</script>
+</body>
+</html>
